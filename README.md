@@ -1,4 +1,4 @@
-# panoramioparser
+# panoramio parser
 Panoramio photos random parser
 
 
