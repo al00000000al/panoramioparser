@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 3 - Создание адаптивной галереи изображений на Mosaic Flow</title>
+    <title>Panoramio parser</title>
     <!-- Bootstrap CSS -->
     <link href="https://itchief.ru/examples/vendors/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- fancyBox CSS -->
@@ -13,11 +13,9 @@
         .mosaicflow__item {
             padding: 3px;
         }
-
         .mosaicflow__column {
             float: left;
         }
-
         .mosaicflow__item img {
             display: block;
             width: 100%;
@@ -27,7 +25,6 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-
         .mosaicflow__item img:hover {
             opacity: 0.6;
             filter: alpha(opacity=60);
@@ -50,7 +47,7 @@
 
 
 
-    <script
+<script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -81,7 +78,6 @@
         rand = Math.floor(rand);
         return rand;
     }
-
     function writeNav(pid,number){
         $('#prev').attr('href', '?pid='+ (pid-number));
         $('#next').attr('href', '?pid='+ (pid+number));
@@ -93,7 +89,6 @@
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?pid=' + pid;
         window.history.pushState({ path: newurl }, '', newurl);
     }
-
     $('#pid').val(pid);
     writeNav(pid, npic);
     if(pid > 0){
@@ -103,19 +98,18 @@
                 formatImage(text2+'.jpg'));
         }
     }
- //   Mousetrap.bind('r', function() { window.location='?pid=0' });
- //   Mousetrap.bind('р', function() { window.location='?pid=0' });
- //   Mousetrap.bind('к', function() { window.location='?pid=0' });
+    Mousetrap.bind('r', function() { window.location='?pid=0' });
+    Mousetrap.bind('р', function() { window.location='?pid=0' });
+    Mousetrap.bind('к', function() { window.location='?pid=0' });
     Mousetrap.bind('left',function() {window.location='?pid='+(pid-npic);});
     Mousetrap.bind('right',function() {window.location='?pid='+(pid+npic);});
     Mousetrap.bind('up',function() {window.location='?pid='+(pid+100);});
     Mousetrap.bind('down',function() {window.location='?pid='+(pid-100);});
-
     function formatImage(link) {
         return `
                <div class="mosaicflow__item">
             <a data-fancybox="gallery" href="https://web.archive.org/web/20191009223423if_/http://static.panoramio.com/photos/original/`+link+`">
-                <img class="img-responsive" src="https://web.archive.org/web/20191009223423if_/http://mw2.google.com/mw-panoramio/photos/medium/`+link+`" alt="image">
+                <img class="img-responsive" src="https://web.archive.org/web/20191009223423if_/http://static.panoramio.com/photos/small/`+link+`" alt="image" onerror="this.style.display='none';">
             </a>
         </div>
         `;
