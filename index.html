@@ -1,118 +1,125 @@
-<!doctype html>
-<html>
-	<head>
-	<title>Panoramio parser</title>
-	
-	<style> h1{
-	font-size:1.4rem;
-	}
-	.container, .form, .results, .navigate{
-	display:flex;
-	}
-	
-	.container{
-	flex-direction:column;
-	}
-	.navigate{
-	width:100%;
-	justify-content: space-evenly;
-	}
-	.form{    flex-direction: column;
-    align-items: center;
-    height: 20%;
-    width: 100%;
-	}
-	
-		.results{
-		flex-wrap: wrap;
-		width:100%;
-		margin:0 auto;
-		}
-		
-		.photo{
-    height: 300px;
-	width:300px;
-    border-radius: 2px 2px 0px 0px;
-    -o-object-fit: cover;
-    object-fit: cover;
-	border:1px solid white;
-		}
-		
-		.photo:hover{
-		border:1px solid red;
-		}
-	</style>
-	</head>
-	<body>
-		<div class="container">
-		<h1>Panoramio parser</h1>
-			<form method="get" class="form">
-				<label>  ID: <input type="text" name="pid" id="pid"/>     <a href="?pid=0" accesskey="q"> Random</a></label><br>
-				<input type="submit" value="Отправить" /><br>
-			</form>
-			<div class="results">
-			</div>
-			<div class="navigate">
-				<a href="#" id="prev">|--- Prev</a>
-				<a href="#" id="next">Next ---|</a>
-			</div>
-		</div>
-		<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.0/mousetrap.min.js'></script>
-		<script>
-		function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 3 - Создание адаптивной галереи изображений на Mosaic Flow</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://itchief.ru/examples/vendors/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- fancyBox CSS -->
+    <link href="https://itchief.ru/examples/vendors/fancybox/jquery.fancybox.min.css" rel="stylesheet">
+    <style>
+        .mosaicflow__item {
+            padding: 3px;
+        }
 
-function randomInteger(min, max) {
-    var rand = min + Math.random() * (max + 1 - min);
-    rand = Math.floor(rand);
-    return rand;
-  }
-  
-function writeNav(pid,number){
-	$('#prev').attr('href', '?pid='+ (pid-number));
-	$('#next').attr('href', '?pid='+ (pid+number));
-}
+        .mosaicflow__column {
+            float: left;
+        }
+
+        .mosaicflow__item img {
+            display: block;
+            width: 100%;
+            height: auto;
+            padding: 4px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .mosaicflow__item img:hover {
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="h3 text-center">Panoramio parser</h1>
+    <form method="get" class="form">
+        <label>  ID: <input type="text" name="pid" id="pid"/>     <a href="?pid=0" accesskey="q"> Random</a></label><br>
+        <input type="submit" value="Отправить" /><br>
+    </form>
+    <div id="mycontainer">
+
+    </div>
+</div>
 
 
 
-var npic = 32;
-var pid = parseInt(getParameterByName('pid'));
-if(pid>0){} else{
-	pid = randomInteger(1, 9999999);
-	var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?pid=' + pid;
-	window.history.pushState({ path: newurl }, '', newurl);
-	}
-	
-	$('#pid').val(pid);
-writeNav(pid, npic);
-if(pid > 0){
-for(var i = 0; i < (npic-1); i++){
-	var text2 = pid + i;
-	$('.results').append(
-	"<a href='https://web.archive.org/web/20191009223423if_/http://static.panoramio.com/photos/original/"
-	+ text2 + 
-	".jpg'  target='_blank'><img src='https://web.archive.org/web/20191009223423if_/http://mw2.google.com/mw-panoramio/photos/medium/" 
-	+text2 +
-	".jpg' class=\"photo\" onload=\"if(this.naturalWidth < 512px or this.naturalHeigh < 512px){this.style.display='none';}\" onerror=\"this.style.display='none';\"></a>");
-}
-}
 
-Mousetrap.bind('left',function() {window.location='?pid='+(pid-npic);});
-Mousetrap.bind('right',function() {window.location='?pid='+(pid+npic);});
-Mousetrap.bind('up',function() {window.location='?pid='+(pid+100);});
-Mousetrap.bind('down',function() {window.location='?pid='+(pid-100);});
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://itchief.ru/examples/vendors/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!-- fancyBox JS -->
+<script src="https://itchief.ru/examples/vendors/fancybox/jquery.fancybox.min.js"></script>
+<!-- Mosiac Flow -->
+<script src="https://itchief.ru/examples/vendors/mosaicflow/jquery.mosaicflow.js"></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.0/mousetrap.min.js'></script>
+<script>
+    $(function () {
+        $('#mycontainer').mosaicflow({
+            itemSelector: '.mosaicflow__item',
+            minItemWidth: 300
+        });
+    });
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    function randomInteger(min, max) {
+        var rand = min + Math.random() * (max + 1 - min);
+        rand = Math.floor(rand);
+        return rand;
+    }
 
-		</script>
-	</body>
+    function writeNav(pid,number){
+        $('#prev').attr('href', '?pid='+ (pid-number));
+        $('#next').attr('href', '?pid='+ (pid+number));
+    }
+    var npic = 32;
+    var pid = parseInt(getParameterByName('pid'));
+    if(pid>0){} else{
+        pid = randomInteger(1, 59999999);
+        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?pid=' + pid;
+        window.history.pushState({ path: newurl }, '', newurl);
+    }
+
+    $('#pid').val(pid);
+    writeNav(pid, npic);
+    if(pid > 0){
+        for(var i = 0; i < (npic-1); i++){
+            var text2 = pid + i;
+            $('.mycontainer').append(
+                formatImage(text2+'.jpg'));
+        }
+    }
+ //   Mousetrap.bind('r', function() { window.location='?pid=0' });
+ //   Mousetrap.bind('р', function() { window.location='?pid=0' });
+ //   Mousetrap.bind('к', function() { window.location='?pid=0' });
+    Mousetrap.bind('left',function() {window.location='?pid='+(pid-npic);});
+    Mousetrap.bind('right',function() {window.location='?pid='+(pid+npic);});
+    Mousetrap.bind('up',function() {window.location='?pid='+(pid+100);});
+    Mousetrap.bind('down',function() {window.location='?pid='+(pid-100);});
+
+    function formatImage(link) {
+        return `
+               <div class="mosaicflow__item">
+            <a data-fancybox="gallery" href="https://web.archive.org/web/20191009223423if_/http://static.panoramio.com/photos/original/`+link+`">
+                <img class="img-responsive" src="https://web.archive.org/web/20191009223423if_/http://mw2.google.com/mw-panoramio/photos/medium/`+link+`" alt="image">
+            </a>
+        </div>
+        `;
+    }
+</script>
+</body>
 </html>
